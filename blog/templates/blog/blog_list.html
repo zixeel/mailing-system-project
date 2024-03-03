@@ -1,0 +1,27 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+{% load mymedia %}
+<a class="btn btn-outline-primary" href="{% url 'blog:blog_create' %}"> добавить запись</a>
+{% for object in object_list %}
+
+<div class="col">
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <p class="card-text">
+                {{object.title|title}}
+            </p>
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    <a class="p-2 btn btn-outline-primary" href="{% url 'blog:blog_detail' object.pk %}">Перейти</a>
+                    <a class="p-2 btn btn-outline-primary" href="{% url 'blog:blog_update' object.pk %}">Редактировать</a>
+                    <a class="p-2 btn btn-outline-danger" href="{% url 'blog:blog_delete' object.pk %}">Удалить</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+    {% endblock %}

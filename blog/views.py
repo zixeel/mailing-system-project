@@ -9,22 +9,41 @@ from blog.models import Blog
 from main.models import Mail, Client
 
 
+def is_contentmanager(user):
+    """Возвращает булево значение на вхождение пользователя в группу."""
+    return user.groups.filter(name='Контент-менеджер').exists()
+
+
+class MainListView(ListView):
+    """отображениe главной"""
+    model = Blog
+    template_name = 'blog/main.html'
+    extra_context = {'title': 'OWL-mail'}
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(is_published=True)[:2]
+
+        return queryset
+
+    def get_context_data(self, *args, **kwargs):
+        """Получает контекстные данных для страницы."""
+        context_data = super().get_context_data(*args, **kwargs)
+        context_data['mail_count'] = Mail.objects.all().count()
+        context_data['mail_active'] = Mail.objects.filter(status='RUNING').count()
+        context_data['mail_client'] = Client.objects.all().count()
+
+        return context_data
+
+
 class BlogListView(ListView):
     """Просмотр списка блогов"""
     model = Blog
 
     def get_queryset(self, *args, **kwargs):
         queryset = super().get_queryset(*args, **kwargs)
-        queryset = queryset.filter(is_published=True)[:2]
+        queryset = queryset.filter(is_published=True)
         return queryset
-
-    def get_context_data(self, *args, **kwargs):
-        context_data = super().get_context_data(*args, **kwargs)
-        context_data['mailing_count'] = Mail.objects.all().count()
-        context_data['mailing_active'] = Mail.objects.filter(status='LC').count()
-        context_data['mailing_client'] = Client.objects.all().count()
-
-        return context_data
 
 
 class BlogDetailView(DetailView):
@@ -43,7 +62,7 @@ class BlogCreateView(CreateView):
     """создание блога"""
     model = Blog
     fields = ('title', 'content', 'preview', 'is_published')
-    success_url = reverse_lazy('catalog:blog_list')
+    success_url = reverse_lazy('blog:blog_list')
 
     def form_valid(self, form):
         if form.is_valid():
@@ -57,7 +76,7 @@ class BlogCreateView(CreateView):
 class BlogDeleteView(DeleteView):
     """удалиение блога"""
     model = Blog
-    success_url = reverse_lazy('catalog:blog_list')
+    success_url = reverse_lazy('blog:blog_list')
 
 
 class BlogUpdateView(UpdateView):
@@ -67,4 +86,4 @@ class BlogUpdateView(UpdateView):
 
     def get_success_url(self):
         """перенаправление на старицу редактируемого объекта после конформации"""
-        return reverse_lazy('catalog:view_blog', args=[self.kwargs.get("pk")])
+        return reverse_lazy('blog:view_blog', args=[self.kwargs.get("pk")])

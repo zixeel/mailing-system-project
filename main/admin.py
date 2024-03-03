@@ -7,7 +7,7 @@ class ClientAdmin(admin.ModelAdmin):
 
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
-    list_display = ('id', 'subject',)
+    list_display = ('id', 'message_title','message_text')
 
 
 @admin.register(Mail)
@@ -17,4 +17,4 @@ class MailAdmin(admin.ModelAdmin):
 
 @admin.register(Logs)
 class LogsAdmin(admin.ModelAdmin):
-    list_display = ('id', 'date', 'attempt_status', 'mail_server_response',)
+    list_display = ('id', 'created_at', 'status', 'server_response',)
