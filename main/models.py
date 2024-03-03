@@ -24,6 +24,8 @@ class Mail(models.Model):
     send_time = models.TimeField(verbose_name='Send time', default=time(18, 30))
     frequency = models.CharField(verbose_name='Frequency', choices=FREQUENCY_CHOICES)
     status = models.CharField(verbose_name='Status', choices=STATUS_CHOICES)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, verbose_name='creator', default=1,
+                                **NULLABLE)
 
     def __str__(self):
         return f"{self.frequency}, {self.status},{self.start_time}"

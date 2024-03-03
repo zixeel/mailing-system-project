@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
 
 from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
@@ -11,7 +11,7 @@ from django.core.mail import send_mail
 # from main.views import is_manager
 
 from config import settings
-from users.forms import UserRegisterForm, UserProfileForm, ManagerForm
+from users.forms import UserRegisterForm
 from users.models import User
 
 
