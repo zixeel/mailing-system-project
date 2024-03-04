@@ -11,7 +11,8 @@ from django.core.mail import send_mail
 # from main.views import is_manager
 
 from config import settings
-from users.forms import UserRegisterForm
+from main.views import is_manager
+from users.forms import UserRegisterForm, ManagerForm, UserProfileForm
 from users.models import User
 
 
@@ -74,13 +75,13 @@ class ProfileView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
         return user == self.get_object() or user.has_perms(perms)
 
-    # def get_form_class(self):
-    #     user = self.request.user
-    #
-    #     if is_manager(user):
-    #         return ManagerForm
-    #     elif user.is_superuser or user == self.get_object():
-    #         return UserProfileForm
+    def get_form_class(self):
+        user = self.request.user
+
+        if is_manager(user):
+            return ManagerForm
+        elif user.is_superuser or user == self.get_object():
+            return UserProfileForm
 
 
 class UserListView(LoginRequiredMixin, ListView):
