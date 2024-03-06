@@ -1,14 +1,12 @@
 from django.urls import path
 from main.apps import MainConfig
 from django.views.decorators.cache import never_cache
-from main.views import (MailListView,MailCreateView, MessageCreateView,
-                           ClientCreateView, MailDetailView, MailUpdateView,
-                           MailDeleteView, MailEndingListView, ClientDeleteView,
-                           ClientListView)
-
+from main.views import (MailListView, MailCreateView, MessageCreateView,
+                        ClientCreateView, MailDetailView, MailUpdateView,
+                        MailDeleteView, MailEndingListView, ClientDeleteView,
+                        ClientListView)
 
 app_name = MainConfig.name
-
 
 urlpatterns = [
     path('', MailListView.as_view(), name='mail_list'),

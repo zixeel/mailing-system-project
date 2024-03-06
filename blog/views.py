@@ -64,6 +64,10 @@ class BlogCreateView(CreateView):
     fields = ('title', 'content', 'preview', 'is_published')
     success_url = reverse_lazy('blog:blog_list')
 
+    def has_permission(self):
+        user = self.request.user
+        return is_contentmanager(user) or user.is_superuser
+
     def form_valid(self, form):
         if form.is_valid():
             new_mat = form.save()
@@ -78,11 +82,19 @@ class BlogDeleteView(DeleteView):
     model = Blog
     success_url = reverse_lazy('blog:blog_list')
 
+    def has_permission(self):
+        user = self.request.user
+        return is_contentmanager(user) or user.is_superuser
+
 
 class BlogUpdateView(UpdateView):
     """редактирование записи"""
     model = Blog
     fields = ('title', 'content', 'preview', 'is_published')
+
+    def has_permission(self):
+        user = self.request.user
+        return is_contentmanager(user) or user.is_superuser
 
     def get_success_url(self):
         """перенаправление на старицу редактируемого объекта после конформации"""

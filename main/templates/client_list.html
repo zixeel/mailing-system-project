@@ -1,10 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'blog/base.html' %}
+{% load custom_filter %}
+{% load static %}
+{% block content %}
+{% if user.is_authenticated %}
 
-</body>
-</html>
+{% for object in object_list %}
+{% if user == object.creator or user|has_group:"Менеджер" or user.is_superuser %}
+<div class="col-10 mx-5 px-3 py-2">
+    <div class="container">
+        <div class="row text-start">
+            <table class="table table-hover">
+                <tbody>
+                <tr>
+                    <td scope="col">{{ object.full_name }}</td>
+                    <th scope="col">{{ object.email }}</th>
+                    <a class="p-2 btn btn-outline-danger" href="{% url 'main:client_delete' object.pk %}">Удалить</a>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endblock %}

@@ -1,10 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block content %}
+{% if user.is_authenticated %}
+<div class="col-12">
+    <form method="post" enctype="multipart/form-data">
+        <div class="col-lg-5 mx-4" style="padding-top: 30px; padding-left: 40px; padding-bottom: 10px;">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title text-center">
+                        {% if object %}
+                        <button type="submit" class="btn btn-success">сохранить</button>
+                        {% else %}
+                        <button type="submit" class="btn btn-success">Создать</button>
+                        {% endif %}
+                    </h3>
+                </div>
+                <div class="card-body">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn" style="background-color: #2F4F4F;">
+                        {% if object %}
+                        <button type="submit" class="btn btn-success">сохранить</button>
+                        {% else %}
+                        <button type="submit" class="btn btn-success">Создать</button>
+                        {% endif %}
+                    </button>
+                </div>
+                <div class="card-footer"></div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endif %}
+{% endblock %}

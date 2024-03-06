@@ -12,7 +12,7 @@ urlpatterns = [
 
     path('blog/', cache_page(60)(BlogListView.as_view()), name='blog_list'),
     path('blog/create/', never_cache(BlogCreateView.as_view()), name='blog_create'),
-    path('blog/<slug:slug>/', BlogDetailView.as_view(), name='blog_detail'),
-    path('blog/edit/<slug:slug>/', never_cache(BlogUpdateView.as_view()), name='blog_update'),
-    path('blog/delete/<slug:slug>/', BlogDeleteView.as_view(), name='blog_delete'),
+    path('blog//<int:pk>/', BlogDetailView.as_view(), name='blog_detail'),
+    path('blog/edit/<int:pk>/', never_cache(BlogUpdateView.as_view()), name='blog_update'),
+    path('blog/delete/<int:pk>/', BlogDeleteView.as_view(), name='blog_delete'),
 ]

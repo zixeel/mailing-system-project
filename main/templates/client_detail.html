@@ -1,10 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "blog/base.html" %}
+{% load static %}
+{% block content %}
+{% if user.is_authenticated %}
+<div class="container">
+    <div class="row text-start">
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    {% if user.is_authenticated %}
 
-</body>
-</html>
+                    {% if user == object.creator or user.is_superuser %}
+
+                    <a class="p-2 btn btn-outline-danger" href="{% url 'main:client_delete' object.pk %}">Удалить</a>
+
+                    {% endif %}
+
+                    {% endif %}
+                    <h4 class="my-0 font-weight-normal">Клиент</h4>
+                </div>
+                <div class="card-body">
+                    <p>
+                        Клиент: {{ object.surname }} {{ object.first_name }}
+                    </p>
+                    <hr>
+                    <p>
+                        Комментарий: "{{ object.comments }}".
+                    </p>
+                    <hr>
+                    <p>
+                        E-mail: {{ object.email }}
+                    </p>
+                </div>
+                <div class="card-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
