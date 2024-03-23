@@ -1,18 +1,15 @@
 {% extends "blog/base.html" %}
 {% load static %}
 {% block content %}
-{% if user.is_authenticated %}
-
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center"></div>
 <div class="container">
     <div class="row text-start">
-        <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="col-12">
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
                     <div class="d-flex justify-content-end position-relative">
                         <div class="btn-group" role="group">
-                            {% if user.is_authenticated %}
-                            <li><a class="p-2 btn btn-outline-danger" href="{% url 'maim:mail_update' object.pk %}">Редактировать
+
+                            <li><a class="p-2 btn btn-outline-danger" href="{% url 'main:mail_update' object.pk %}">Редактировать
                                 рассылку</a></li>
                             <li><a class="p-2 btn btn-outline-danger" href="{% url 'main:mail_delete' object.pk %}">
                                 Удалить</a></li>
@@ -59,5 +56,4 @@
         </div>
     </div>
 </div>
-{% endif %}
 {% endblock %}

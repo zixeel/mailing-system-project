@@ -1,17 +1,17 @@
-{% extends 'feedback/base.html' %}
+{% extends 'blog/base.html' %}
 {% load custom_filter %}
 {% load static %}
 {% block content %}
 {% if user.is_authenticated %}
 {% if user == object.creator or user|has_group:"Менеджер" or user.is_superuser %}
-<div class="col-12 mb-5 text-center mt-0">
-    <a class="p-2 btn btn-outline-danger" href="{% url 'main:mail_delete' object.pk %}">Удалить</a>
+
     {% endif %}
     {% if not user|has_group:"Менеджер" %}
     <a class="link-secondary" href="{% url 'main:mail_create' %}"> Создать</a>
     {% endif %}
 </div>
 {% for object in object_list %}
+
 {% if user == object.creator or user|has_group:"Менеджер" or user.is_superuser %}
 <div class="container">
     <div class="row text-start">

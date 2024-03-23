@@ -18,9 +18,9 @@ def is_manager(user):
 class MailListView(LoginRequiredMixin, ListView):
     """отображениe всех рассылок."""
     model = Mail
+
     def get_queryset(self):
         queryset = super().get_queryset()
-        queryset = queryset.filter(status__in=('COMPLETE', 'RUNING'))
         return queryset
 
 
@@ -104,7 +104,7 @@ class MailDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     """удалениe рассылки."""
     model = Mail
     permission_required = ('mail.delete_mailing',)
-    success_url = reverse_lazy('main:mailing_list')
+    success_url = reverse_lazy('main:mail_list')
 
     def has_permission(self):
         perms = self.get_permission_required()
@@ -121,7 +121,7 @@ class MessageCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView)
     model = Message
     form_class = MessageForm
     permission_required = ('mail.add_message',)
-    success_url = reverse_lazy('main:mailing_create')
+    success_url = reverse_lazy('main:mail_create')
 
     def has_permission(self):
         user = self.request.user
