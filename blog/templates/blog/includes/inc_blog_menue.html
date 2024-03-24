@@ -1,13 +1,13 @@
 <div class="col-sm-4 offset-md-1 py-4">
     <h4>Меню</h4>
     <ul class="list-unstyled">
-        <li><a href="/" class="text-white">Каталог</a></li>
-        <li><a href="/contacts/" class="text-white">Контакты</a></li>
-        <li><a href="/category/" class="text-white">Категории</a></li>
-        <li><a href="/blog_list/" class="text-white">Блоги</a></li>
+<!--        <li><a href="/" class="text-white">Каталог</a></li>-->
+<!--        <li><a href="/contacts/" class="text-white">Контакты</a></li>-->
+<!--        <li><a href="/category/" class="text-white">Категории</a></li>-->
+<!--        <li><a href="/blog_list/" class="text-white">Блоги</a></li>-->
         {% if user.is_authenticated %}
             <li><a href="{% url 'users:logout' %}" class="text-white">Выйти</a></li>
-            <li><a href="{% url 'users:profile' %}" class="text-white">Edit</a></li>
+            <li><a href="{% url 'users:profile' %}" class="text-white">Редактировать профиль</a></li>
         {% else %}
             <li><a href="{% url 'users:login' %}" class="text-white">Войти</a></li>
             <li><a href="{% url 'users:register' %}" class="text-white">Регистрация</a></li>
