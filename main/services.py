@@ -45,19 +45,20 @@ def mailing_in_frequency() -> None:
     current_datetime = timezone.now()
     mailing = Mail.objects.filter(status='RUNING')
 
-    for mail in mailing:
-        if mail.logs:
-            date_diff = current_datetime - mail.logs.last().created_at
-            if date_diff >= timedelta(days=1) and mail.frequency == 'ONCE_A_DAY':
-                mailing_send(mail)
-            elif date_diff >= timedelta(days=7) and mail.frequency == 'ONCE_A_WEEK':
-                mailing_send(mail)
-            elif date_diff >= timedelta(days=30) and mail.frequency == 'ONCE_A_MONTH':
-                mailing_send(mail)
+    for maill in mailing:
+        print(maill.logs)
+        if maill.logs.exists():
+            date_diff = current_datetime - maill.logs.last().created_at
+            if date_diff >= timedelta(days=1) and maill.frequency == 'ONCE_A_DAY':
+                mailing_send(maill)
+            elif date_diff >= timedelta(days=7) and maill.frequency == 'ONCE_A_WEEK':
+                mailing_send(maill)
+            elif date_diff >= timedelta(days=30) and maill.frequency == 'ONCE_A_MONTH':
+                mailing_send(maill)
             else:
                 pass
         else:
-            mailing_send(mail)
+            mailing_send(maill)
 
 
 def change_status_completed() -> None:

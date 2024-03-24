@@ -75,3 +75,10 @@ class Logs(models.Model):
     mail = models.ForeignKey(Mail, on_delete=models.CASCADE, verbose_name='Mail', related_name='logs')
     status = models.CharField(verbose_name='Status', choices=STATUS_CHOICES, **NULLABLE)
     server_response = models.TextField(verbose_name='Server Response', **NULLABLE)
+
+    def __str__(self):
+        return f"{self.created_at}, {self.status},{self.server_response}"
+
+    class Meta:
+        verbose_name = 'Log'
+        verbose_name_plural = 'Logs'
